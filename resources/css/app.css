@@ -1,0 +1,9 @@
+body.login .login-container {
+    margin-top: -230px;
+    padding: 50px 0px 150px 0px !important;
+    position: absolute;
+    top: 50% !important;
+    /* width: 90%; */
+    z-index: 10 !important;
+    position-area: center !important;
+}
