@@ -30,8 +30,7 @@ class Tour extends Model
     ];
 
     protected $with = [ 'itineraries', 'validity', 'paymentTerms', 'inclusions', 'exclusions', 'types'];
-    protected $append = ['images'];
-    protected $appends = ['tags'];
+    protected $appends = ['images,tags'];
 
 
 
