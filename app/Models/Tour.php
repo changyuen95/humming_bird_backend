@@ -19,6 +19,7 @@ class Tour extends Model
         'to_date',
         'days',
         'nights',
+        'region',
         'minimum_pax',
         'leader',
         'price',
@@ -69,10 +70,11 @@ class Tour extends Model
     public function getTagsAttribute()
     {
         $tags = [];
+        $types = $this->types->pluck('type')->implode(', ');
         $tags[] = $this->destination;
         $tags[] = $this->region;
         $tags[] = $this->season;
-        $tags[] = $this->types->pluck('name');
+        $tags[] = array_merge($types);
         return implode(', ', $tags);
     }
 }
