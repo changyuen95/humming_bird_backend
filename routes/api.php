@@ -15,10 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->group(function () {
     Route::get('/tours', [TourController::class, 'getTours']); // Get a list of tours
     Route::get('/tours/{id}', [TourController::class, 'getTourDetails']); // Get tour details by ID
-});
+
 
 
 
