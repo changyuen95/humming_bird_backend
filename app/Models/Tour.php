@@ -70,11 +70,12 @@ class Tour extends Model
     public function getTagsAttribute()
     {
         $tags = [];
-        $types = $this->types->pluck('type')->toArray()->implode(', ');
+        $types = $this->types->pluck('type')->toArray();
+
         $tags[] = $this->destination;
         $tags[] = $this->region;
         $tags[] = $this->season;
-        $tags[] = array_merge($types);
-        return implode(', ', $tags);
+        $tags = array_merge($types);
+        return $tags;
     }
 }
