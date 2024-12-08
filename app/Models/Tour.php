@@ -88,9 +88,11 @@ class Tour extends Model
     }
 
     public function getImagesAttribute()
-    {
+{
+    // Flatten the collection of images from all itineraries
+    return $this->itineraries->flatMap(function ($itinerary) {
+        return $itinerary->images;
+    });
+}
 
-        return $this->itineraries->images;
-
-    }
 }
