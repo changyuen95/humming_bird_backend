@@ -87,4 +87,68 @@ class TourController extends Controller
             'tour' => $tour,
         ], 200);
     }
+
+    public function getToursFilter(Request $request){
+
+        $filter_params = $request->filter_params;
+        $filteredTours = Tour::all();
+        if ($filter_params['types'] && (!in_array('All', $filter_params['types']))) {
+
+            // log::info(implode(",",$filter_params['types']));
+            $filteredTours = $filteredTours->filter(function ($tour) use ($filter_params) {
+                return !empty(array_intersect($tour['types'], $filter_params['types']));
+            });
+        }
+
+        if ($filter_params['season'] && (!in_array('All', $filter_params['season']))) {
+
+            $filteredTours = $filteredTours->filter(function ($tour) use ($filter_params) {
+                return !empty(array_intersect($tour['types'], $filter_params['season']));
+            });
+        }
+
+        if ($filter_params['destinations'] && (!in_array('All', $filter_params['destinations'])) ) {
+
+            $filteredTours = $filteredTours->filter(function ($tour) use ($filter_params) {
+                return !empty(array_intersect($tour['types'], $filter_params['destinations']));
+            });
+
+        }
+
+
+
+        if ($filter_params['date'] && (!in_array('All', $filter_params['date'])) ) {
+
+            $filteredTours = $filteredTours->filter(function ($tour) use ($filter_params) {
+
+
+                foreach ($filter_params['date'] as $month) {
+                    $months[] = $month;
+                    $months[] = $month+1;
+                    $months[] = $month+2;
+                }
+
+                // Parse the tour start and end dates
+                $tourStartDate = Carbon::parse($tour['from_date']);
+                $tourEndDate = Carbon::parse($tour['to_date']);
+
+                // Extract the month for each date
+                $tourStartMonth = $tourStartDate->month;
+                $tourEndMonth = $tourEndDate->month;
+
+                // Check if either the start month or end month is in the filter months array
+                return in_array($tourStartMonth, $months) || in_array($tourEndMonth, $months);
+            });
+
+
+
+
+
+        $final_tours = $filteredTours->values()->all();
+        return response()->json([
+            'status' => true,
+            'tours' => $final_tours,
+        ], 200);
+    }
+
 }
