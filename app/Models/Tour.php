@@ -28,6 +28,8 @@ class Tour extends Model
         'status',
     ];
 
+    protected $with = ['images', 'itineraries', 'validity', 'paymentTerms', 'inclusions', 'exclusions', 'types'];
+
     public function images()
     {
         return $this->hasMany(TourImage::class);
@@ -61,5 +63,15 @@ class Tour extends Model
     public function types()
     {
         return $this->hasMany(TourType::class);
+    }
+
+    public function getTagsAttribute()
+    {
+        $tags = [];
+        $tags[] = $this->destination;
+        $tags[] = $this->region;
+        $tags[] = $this->season;
+        $tags[] = $this->types->pluck('name');
+        return implode(', ', $tags);
     }
 }
