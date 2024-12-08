@@ -29,13 +29,12 @@ class Tour extends Model
         'status',
     ];
 
-    protected $with = ['images', 'itineraries', 'validity', 'paymentTerms', 'inclusions', 'exclusions', 'types'];
-
+    protected $with = [ 'itineraries', 'validity', 'paymentTerms', 'inclusions', 'exclusions', 'types'];
+    protected $append = ['images'];
     protected $appends = ['tags'];
-    public function images()
-    {
-        return $this->hasMany(TourImage::class);
-    }
+
+
+
 
     public function itineraries()
     {
@@ -87,5 +86,12 @@ class Tour extends Model
             return $image->image;
         }
         return null;
+    }
+
+    public function getImagesAttribute()
+    {
+
+        return $this->itineraries->images;
+
     }
 }

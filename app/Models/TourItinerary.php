@@ -17,6 +17,11 @@ class TourItinerary extends Model
         'accommodation',
     ];
 
+    protected $with = [
+        'highlights',
+        'images',
+    ];
+
     // Relationship with TourItineraryHighlight
     public function highlights()
     {
