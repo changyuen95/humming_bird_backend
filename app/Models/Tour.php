@@ -30,6 +30,7 @@ class Tour extends Model
 
     protected $with = ['images', 'itineraries', 'validity', 'paymentTerms', 'inclusions', 'exclusions', 'types'];
 
+    protected $appends = ['tags'];
     public function images()
     {
         return $this->hasMany(TourImage::class);
