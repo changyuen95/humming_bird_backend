@@ -144,11 +144,12 @@ class TourController extends Controller
 
 
 
-        $final_tours = $filteredTours->values()->all();
-        return response()->json([
-            'status' => true,
-            'tours' => $final_tours,
-        ], 200);
-    }
+            $final_tours = $filteredTours->values()->all();
+            return response()->json([
+                'status' => true,
+                'tours' => $final_tours,
+            ], 200);
+        }
 
+    }
 }
