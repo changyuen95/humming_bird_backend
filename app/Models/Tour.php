@@ -78,4 +78,14 @@ class Tour extends Model
         $tags = array_merge($types);
         return $tags;
     }
+
+    public function getImageAttribute()
+    {
+
+        $image = $this->images->first();
+        if ($image) {
+            return $image->image;
+        }
+        return null;
+    }
 }

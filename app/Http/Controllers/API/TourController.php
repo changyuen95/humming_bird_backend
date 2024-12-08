@@ -73,10 +73,12 @@ class TourController extends Controller
     }
 
     // Get details for a specific tour
-    public function getTourDetails($id)
+    public function getTourDetails($name)
     {
-        $tour = Tour::with(['itineraries', 'images', 'paymentTerms', 'inclusions', 'exclusions'])
-                    ->find($id);
+
+
+
+        $tour = Tour::where('name',$name)->first();
 
         if (!$tour) {
             return response()->json(['message' => 'Tour not found'], 404);
