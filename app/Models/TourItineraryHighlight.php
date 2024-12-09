@@ -18,4 +18,7 @@ class TourItineraryHighlight extends Model
     {
         return $this->belongsTo(TourItinerary::class);
     }
+
+
+
 }
