@@ -15,9 +15,9 @@ class CreateTourFaresTable extends Migration
     {
         Schema::create('tour_fares', function (Blueprint $table) {
             $table->id();
-            $table->varchar('name');
+            $table->foreignId('tour_id')->constrained()->onDelete('cascade');
+            $table->text('name');
             $table->decimal('price',11,2);
-            $table->softDeletes();
             $table->timestamps();
         });
     }
