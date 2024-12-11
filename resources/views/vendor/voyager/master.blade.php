@@ -30,6 +30,43 @@
 
     <!-- Few Dynamic Styles -->
     <style type="text/css">
+            /* Error Box Styling */
+            .error-box {
+                color: #a94442;
+                background-color: #f2dede;
+                border: 1px solid #ebccd1;
+                padding: 15px;
+                margin-bottom: 20px;
+                border-radius: 4px;
+            }
+
+            /* Success Box Styling */
+            .success-box {
+                color: #3c763d;
+                background-color: #dff0d8;
+                border: 1px solid #d6e9c6;
+                padding: 15px;
+                margin-bottom: 20px;
+                border-radius: 4px;
+            }
+
+            /* Close Button */
+            .close-button {
+                float: right;
+                font-size: 20px;
+                font-weight: bold;
+                line-height: 1;
+                color: #000;
+                text-shadow: 0 1px 0 #fff;
+                cursor: pointer;
+                opacity: 0.5;
+            }
+
+            .close-button:hover {
+                color: #000;
+                opacity: 0.75;
+            }
+
         .voyager .side-menu .navbar-header {
             background:{{ config('voyager.primary_color','#22A7F0') }};
             border-color:{{ config('voyager.primary_color','#22A7F0') }};
@@ -43,6 +80,41 @@
         .voyager .breadcrumb a{
             color:{{ config('voyager.primary_color','#22A7F0') }};
         }
+        .custom-modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+        }
+
+        .custom-modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .custom-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .custom-close:hover,
+        .custom-close:focus {
+            color: black;
+            text-decoration: none;
+        }
+
     </style>
 
     @if(!empty(config('voyager.additional_css')))<!-- Additional CSS -->

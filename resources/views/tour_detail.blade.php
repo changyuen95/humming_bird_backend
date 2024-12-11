@@ -1,28 +1,32 @@
 @extends('voyager::master')
 
 @section('content')
+<div class="container-fluid mb-3">
+    <a href="{{ route('tour.index') }}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Back to Tour Index
+    </a>
+</div>
+
+
     <div class="container-fluid">
         <div class="row mb-5">
             <div class="col-sm-12">
 
                 {{-- Display Success and Error Messages --}}
-                @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
                 @endif
 
-                @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                @endif
+                    @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
 
                 <div class="card mt-3">
                     <div class="card-header">
@@ -46,30 +50,98 @@
                             <div class="card mb-4">
                                 <div class="card-header">Tour Details</div>
                                 <div class="card-body">
-                                    <div class="form-group">
+                                    <div class="form-group col-lg-6">
                                         <label for="name">Tour Name:</label>
-                                        <input type="text" class="form-control" id="name" name="name" value="{{ isset($tour) ? $tour->name : '' }}" required>
+                                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', isset($tour) ? $tour->name : '') }}" required>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group col-lg-6">
+                                        <label for="introduction">Introduction:</label>
+                                        <input type="text" class="form-control" id="introduction" name="introduction" value="{{ old('introduction', isset($tour) ? $tour->description : '') }}" required>
+                                    </div>
+                                    <div class="form-group col-lg-6">
                                         <label for="destination">Destination:</label>
-                                        <input type="text" class="form-control" id="destination" name="destination" value="{{ isset($tour) ? $tour->destination : '' }}" required>
+                                        <input type="text" class="form-control" id="destination" name="destination" value="{{ old('destination', isset($tour) ? $tour->destination : '') }}" required>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group col-lg-6">
+                                        <label for="region">Region:</label>
+                                        <input type="text" class="form-control" id="region" name="region" value="{{ old('region', isset($tour) ? $tour->region : '') }}" required>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="season">Season:</label>
+                                        <input type="text" class="form-control" id="season" name="season" value="{{ old('season', isset($tour) ? $tour->season : '') }}" required>
+                                    </div>
+                                    <div class="form-group col-lg-6">
                                         <label for="price">Price:</label>
-                                        <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{ isset($tour) ? $tour->price : '' }}" required>
+                                        <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{ old('price', isset($tour) ? $tour->price : '') }}" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="from_date">From Date:</label>
-                                        <input type="date" class="form-control" id="from_date" name="from_date" value="{{ isset($tour) ? $tour->from_date : '' }}" required>
+                                    <div class="form-group col-lg-6">
+                                        <label for="min_pax">Min Pax:</label>
+                                        <input type="number" step="1" class="form-control" id="min_pax" name="min_pax" value="{{ old('min_pax', isset($tour) ? $tour->minimum_pax : '') }}" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="to_date">To Date:</label>
-                                        <input type="date" class="form-control" id="to_date" name="to_date" value="{{ isset($tour) ? $tour->to_date : '' }}" required>
+                                    <div class="form-group col-lg-6">
+                                        <label for="max_pax">Max Pax:</label>
+                                        <input type="number" step="1" class="form-control" id="max_pax" name="max_pax" value="{{ old('max_pax', isset($tour) ? $tour->maximum_pax : '') }}" required>
                                     </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="days">Days:</label>
+                                        <input type="number" step="1" class="form-control" id="days" name="days" value="{{ old('days', isset($tour) ? $tour->days : '') }}" required>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="nights">Nights:</label>
+                                        <input type="number" step="1" class="form-control" id="nights" name="nights" value="{{ old('nights', isset($tour) ? $tour->nights : '') }}" required>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="from_date">Start Date:</label>
+                                        <input type="date" class="form-control" id="from_date" name="from_date" value="{{ old('from_date', isset($tour) ? $tour->from_date : '') }}" required>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="to_date">End Date:</label>
+                                        <input type="date" class="form-control" id="to_date" name="to_date" value="{{ old('to_date', isset($tour) ? $tour->to_date : '') }}" required>
+                                    </div>
+
+
                                 </div>
                             </div>
 
-                            <!-- Tour Validity Section -->
+                                {{-- @dd($tour->paymentTerms) --}}
+                            <!-- Payment terms Section -->
+                            <div class="card mb-4">
+                                <div class="card-header">Payment Terms</div>
+                                <div class="card-body">
+                                    <table class="table" id="payment-section">
+                                        <thead>
+                                            <tr>
+                                                <th>Terms</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if(old('payment_term') || (isset($tour->paymentTerms) && $tour->paymentTerms->count() > 0))
+                                                @foreach(old('payment_term', $tour->paymentTerms ?? []) as $index => $terms)
+                                                    <tr>
+                                                        <input type="hidden" name="payment_term_ids[]" value="{{ old("payment_term_ids.$index", $terms->id ?? '') }}">
+                                                        <td>
+                                                            <textarea class="ckeditor-textarea form-control" name="payment_term[]">{{ old("payment_term.$index", $terms->name ?? '') }}</textarea>
+                                                        </td>
+                                                        <td><button type="button" class="btn btn-danger remove-payment-term-row">Remove</button></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <input type="hidden" name="payment_term_ids[]" value="">
+                                                    <td>
+                                                        <textarea class="ckeditor-textarea form-control" name="payment_term[]"></textarea>
+                                                    </td>
+                                                    <td><button type="button" class="btn btn-danger remove-payment-term-row">Remove</button></td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+
+                                    </table>
+                                    <button type="button" class="btn btn-success add-payment-term-row">Add Payment Terms</button>
+                                </div>
+                            </div>
+
                             <div class="card mb-4">
                                 <div class="card-header">Tour Validity</div>
                                 <div class="card-body">
@@ -81,15 +153,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if(isset($tour->validity) && $tour->validity->count() > 0)
-                                                @foreach($tour->validity as $validity)
-                                                    <tr>
-                                                        <input type="hidden" name="validity_ids[]" value="{{ $validity->id }}">
-                                                        <td><textarea class="ckeditor-textarea form-control" name="validity[]">{{ $validity->validity }}</textarea></td>
-                                                        <td><button type="button" class="btn btn-danger remove-validity-row">Remove</button></td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
+                                            @php
+                                                $validities = old('validity', isset($tour->validity) ? $tour->validity->toArray() : []);
+                                            @endphp
+                                            @foreach($validities as $index => $validity)
+                                                <tr>
+                                                    <input type="hidden" name="validity_ids[]" value="{{ old('validity_ids.'.$index, $validity['id'] ?? '') }}">
+                                                    <td><textarea class="ckeditor-textarea form-control" name="validity[]">{{ old('validity.'.$index, $validity['validity'] ?? '') }}</textarea></td>
+                                                    <td><button type="button" class="btn btn-danger remove-validity-row">Remove</button></td>
+                                                </tr>
+                                            @endforeach
+                                            @if(empty($validities))
                                                 <tr>
                                                     <input type="hidden" name="validity_ids[]" value="">
                                                     <td><textarea class="ckeditor-textarea form-control" name="validity[]"></textarea></td>
@@ -102,7 +176,7 @@
                                 </div>
                             </div>
 
-                            <!-- Tour Inclusion Section -->
+
                             <div class="card mb-4">
                                 <div class="card-header">Tour Inclusions</div>
                                 <div class="card-body">
@@ -114,15 +188,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if(isset($tour->inclusions) && $tour->inclusions->count() > 0)
-                                                @foreach($tour->inclusions as $inclusion)
-                                                    <tr>
-                                                        <input type="hidden" name="inclusion_ids[]" value="{{ $inclusion->id }}">
-                                                        <td><textarea class="ckeditor-textarea form-control" name="inclusion[]">{{ $inclusion->inclusion }}</textarea></td>
-                                                        <td><button type="button" class="btn btn-danger remove-inclusion-row">Remove</button></td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
+                                            @php
+                                                $inclusions = old('inclusion', isset($tour->inclusions) ? $tour->inclusions->toArray() : []);
+                                            @endphp
+                                            @foreach($inclusions as $index => $inclusion)
+                                                <tr>
+                                                    <input type="hidden" name="inclusion_ids[]" value="{{ old('inclusion_ids.'.$index, $inclusion['id'] ?? '') }}">
+                                                    <td><textarea class="ckeditor-textarea form-control" name="inclusion[]">{{ old('inclusion.'.$index, $inclusion['inclusion'] ?? '') }}</textarea></td>
+                                                    <td><button type="button" class="btn btn-danger remove-inclusion-row">Remove</button></td>
+                                                </tr>
+                                            @endforeach
+                                            @if(empty($inclusions))
                                                 <tr>
                                                     <input type="hidden" name="inclusion_ids[]" value="">
                                                     <td><textarea class="ckeditor-textarea form-control" name="inclusion[]"></textarea></td>
@@ -135,7 +211,7 @@
                                 </div>
                             </div>
 
-                            <!-- Tour Exclusion Section -->
+
                             <div class="card mb-4">
                                 <div class="card-header">Tour Exclusions</div>
                                 <div class="card-body">
@@ -147,15 +223,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if(isset($tour->exclusions) && $tour->exclusions->count() > 0)
-                                                @foreach($tour->exclusions as $exclusion)
-                                                    <tr>
-                                                        <input type="hidden" name="exclusion_ids[]" value="{{ $exclusion->id }}">
-                                                        <td><textarea class="ckeditor-textarea form-control" name="exclusion[]">{{ $exclusion->exclusion }}</textarea></td>
-                                                        <td><button type="button" class="btn btn-danger remove-exclusion-row">Remove</button></td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
+                                            @php
+                                                $exclusions = old('exclusion', isset($tour->exclusions) ? $tour->exclusions->toArray() : []);
+                                            @endphp
+                                            @foreach($exclusions as $index => $exclusion)
+                                                <tr>
+                                                    <input type="hidden" name="exclusion_ids[]" value="{{ old('exclusion_ids.'.$index, $exclusion['id'] ?? '') }}">
+                                                    <td><textarea class="ckeditor-textarea form-control" name="exclusion[]">{{ old('exclusion.'.$index, $exclusion['exclusion'] ?? '') }}</textarea></td>
+                                                    <td><button type="button" class="btn btn-danger remove-exclusion-row">Remove</button></td>
+                                                </tr>
+                                            @endforeach
+                                            @if(empty($exclusions))
                                                 <tr>
                                                     <input type="hidden" name="exclusion_ids[]" value="">
                                                     <td><textarea class="ckeditor-textarea form-control" name="exclusion[]"></textarea></td>
@@ -168,99 +246,173 @@
                                 </div>
                             </div>
 
+
                             <!-- Tour Itinerary Section -->
                             <div class="card mb-4">
                                 <div class="card-header">Tour Itinerary</div>
                                 <div class="card-body">
                                     <div id="itinerary-section">
-                                        @if(isset($tour->itineraries) && $tour->itineraries->count() > 0)
-                                            @foreach($tour->itineraries as $itinerary)
-                                                <div class="card mb-3 itinerary-item">
-                                                    <div class="card-header">
-                                                        Day {{ $itinerary->day }} - {{ $itinerary->title }}
-                                                        <button type="button" class="btn btn-danger float-right remove-itinerary-row">Remove</button>
+                                        @php
+                                            $itineraries = old('itinerary_ids') ? array_map(null, old('itinerary_ids'), old('itinerary_day'), old('itinerary_title'), old('itinerary_meal'), old('itinerary_accommodation'), old('itinerary_highlights')) : (isset($tour->itineraries) ? $tour->itineraries->toArray() : []);
+                                        @endphp
+                                        @foreach($itineraries as $index => $itinerary)
+                                            <div class="card mb-3 itinerary-item">
+                                                <div class="card-header">
+                                                    Day {{ old("itinerary_day.$index", $itinerary['day'] ?? '') }} - {{ old("itinerary_title.$index", $itinerary['title'] ?? '') }}
+                                                    <button type="button" class="btn btn-danger float-right remove-itinerary-row">Remove</button>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <input type="hidden" name="itinerary_ids[]" value="{{ old("itinerary_ids.$index", $itinerary['id'] ?? '') }}">
+                                                        <div class="col-md-2 mb-3">
+                                                            <label>Day</label>
+                                                            <input type="number" name="itinerary_day[]" value="{{ old("itinerary_day.$index", $itinerary['day'] ?? '') }}" class="form-control" required>
+                                                        </div>
+                                                        <div class="col-md-4 mb-3">
+                                                            <label>Title</label>
+                                                            <input type="text" name="itinerary_title[]" value="{{ old("itinerary_title.$index", $itinerary['title'] ?? '') }}" class="form-control" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Meal</label>
+                                                            <input type="text" name="itinerary_meal[]" value="{{ old("itinerary_meal.$index", $itinerary['meal'] ?? '') }}" class="form-control">
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Accommodation</label>
+                                                            <input type="text" name="itinerary_accommodation[]" value="{{ old("itinerary_accommodation.$index", $itinerary['accommodation'] ?? '') }}" class="form-control">
+                                                        </div>
                                                     </div>
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <input type="hidden" name="itinerary_ids[]" value="{{ $itinerary->id }}">
-                                                            <div class="col-md-2 mb-3">
-                                                                <label>Day</label>
-                                                                <input type="number" name="itinerary_day[]" value="{{ $itinerary->day }}" class="form-control" required>
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label>Title</label>
-                                                                <input type="text" name="itinerary_title[]" value="{{ $itinerary->title }}" class="form-control" required>
-                                                            </div>
-                                                            <div class="col-md-3 mb-3">
-                                                                <label>Meal</label>
-                                                                <input type="text" name="itinerary_meal[]" value="{{ $itinerary->meal }}" class="form-control">
-                                                            </div>
-                                                            <div class="col-md-3 mb-3">
-                                                                <label>Accommodation</label>
-                                                                <input type="text" name="itinerary_accommodation[]" value="{{ $itinerary->accommodation }}" class="form-control">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label>Highlights</label>
+                                                            <div class="highlights-container">
+                                                                @php
+                                                                    $highlights = old("itinerary_highlights.$index") ?? ($itinerary['highlights'] ?? []);
+                                                                @endphp
+                                                                @foreach($highlights as $highlightIndex => $highlight)
+                                                                    <div class="highlight-item mb-2">
+                                                                        <input type="text" name="itinerary_highlights[{{ $index }}][]" value="{{ $highlight['highlight'] }}" class="form-control mb-2">
+                                                                        <button type="button" class="btn btn-danger btn-sm remove-highlight">Remove Highlight</button>
+                                                                    </div>
+                                                                @endforeach
+                                                                <button type="button" class="btn btn-success btn-sm add-highlight mt-2" data-itinerary-id="{{ $index }}">Add Highlight</button>
                                                             </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <label>Highlights</label>
-                                                                <div class="highlights-container">
-                                                                    @if(isset($itinerary->highlights) && $itinerary->highlights->count() > 0)
-                                                                        @foreach($itinerary->highlights as $highlight)
-                                                                            <div class="highlight-item mb-2">
-                                                                                <input type="text" name="itinerary_highlights[{{ $itinerary->id }}][]" value="{{ $highlight->highlight }}" class="form-control mb-2">
-                                                                                <button type="button" class="btn btn-danger btn-sm remove-highlight">Remove Highlight</button>
-                                                                            </div>
-                                                                        @endforeach
-                                                                    @endif
-                                                                    <button type="button" class="btn btn-success btn-sm add-highlight mt-2" data-itinerary-id="{{ $itinerary->id }}">Add Highlight</button>
-                                                                </div>
+                                                        <div class="col-md-6">
+                                                            <label>Images</label>
+                                                            <input type="file" name="itinerary_images[{{ $index }}][]" multiple class="form-control image-input">
+                                                            <div class="existing-images mt-3">
+                                                                <label>Uploaded Images:</label>
+                                                                <ul class="list-unstyled">
+                                                                    @foreach($itinerary['images'] ?? [] as $image)
+                                                                        <li class="existing-image-wrapper mb-2">
+                                                                            <img src="{{ asset('storage/' . $image['image']) }}" class="img-thumbnail mb-2" style="width: 100px;">
+                                                                            <input type="hidden" name="existing_itinerary_images[{{ $index }}][]" value="{{ $image['id'] }}">
+                                                                            <button type="button" class="btn btn-danger btn-sm remove-image" data-image-id="{{ $image['id'] }}">Remove</button>
+                                                                        </li>
+                                                                    @endforeach
+                                                                </ul>
+                                                                <input type="hidden" name="removed_itinerary_image_ids[{{ $index }}][]" class="removed-image-ids">
+
                                                             </div>
-                                                            <div class="col-md-6">
-                                                                <label>Images</label>
-                                                                <input type="file" name="itinerary_images[{{ $itinerary->id }}][]" multiple class="form-control">
-                                                                <div class="existing-images mt-3">
-                                                                    <label>Uploaded Images:</label>
-                                                                    <ul class="list-unstyled">
-                                                                        @foreach($itinerary->images as $image)
-                                                                            <li class="existing-image-wrapper mb-2">
-                                                                                <img src="{{ asset($image->image) }}" alt="Itinerary Image" class="img-thumbnail mb-2" width="100">
-                                                                                <button type="button" class="btn btn-danger btn-sm remove-image" data-image-id="{{ $image->id }}">Remove Image</button>
-                                                                            </li>
-                                                                        @endforeach
-                                                                    </ul>
+                                                        </div>
+
+                                                        <!-- Cropper Modal -->
+                                                        <div id="customModal" class="custom-modal">
+                                                            <div class="custom-modal-content">
+                                                                <span class="custom-close">&times;</span>
+                                                                <h5>Crop Image</h5>
+                                                                <div class="img-container">
+                                                                    <img id="cropImagePreview" src="" style="max-width: 100%;">
                                                                 </div>
+                                                                <button type="button" id="cropImage" class="btn btn-primary">Crop</button>
+                                                                <button type="button" class="btn btn-secondary custom-close">Cancel</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @endforeach
+                                            </div>
+                                        @endforeach
+
+                                        @if(empty($itineraries))
+                                            <div class="card mb-3 itinerary-item">
+                                                <div class="card-header">
+                                                    New Day - New Title
+                                                    <button type="button" class="btn btn-danger float-right remove-itinerary-row">Remove</button>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <input type="hidden" name="itinerary_ids[]" value="">
+                                                        <div class="col-md-2 mb-3">
+                                                            <label>Day</label>
+                                                            <input type="number" name="itinerary_day[]" class="form-control" required>
+                                                        </div>
+                                                        <div class="col-md-4 mb-3">
+                                                            <label>Title</label>
+                                                            <input type="text" name="itinerary_title[]" class="form-control" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Meal</label>
+                                                            <input type="text" name="itinerary_meal[]" class="form-control">
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Accommodation</label>
+                                                            <input type="text" name="itinerary_accommodation[]" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label>Highlights</label>
+                                                            <div class="highlights-container">
+                                                                <div class="highlight-item mb-2">
+                                                                    <input type="text" name="itinerary_highlights[new][]" class="form-control mb-2">
+                                                                    <button type="button" class="btn btn-danger btn-sm remove-highlight">Remove Highlight</button>
+                                                                </div>
+                                                                <button type="button" class="btn btn-success btn-sm add-highlight mt-2" data-itinerary-id="new">Add Highlight</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label>Images</label>
+                                                            <input type="file" name="itinerary_images[new][]" multiple class="form-control image-input">
+                                                            <div class="existing-images mt-3">
+                                                                <label>Uploaded Images:</label>
+                                                                <ul class="list-unstyled">
+                                                                    <!-- Images will be dynamically added here -->
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endif
                                     </div>
                                     <button type="button" class="btn btn-success add-itinerary-row">Add Itinerary</button>
                                 </div>
                             </div>
 
+
                             <!-- Tour Types Section -->
                             <div class="card mb-4">
                                 <div class="card-header">Tour Types</div>
                                 <div class="card-body">
                                     <select class="form-control" id="tour-types" name="tour_types[]" multiple="multiple">
-                                        @foreach($tour->types as $tourType)
-                                            <option value="{{ $tourType->id }}"
-                                                @if(isset($tour) && $tour->types->contains($tourType->id)) selected @endif>
-                                                {{ $tourType->type }}
-                                            </option>
-                                        @endforeach
+                                        @php
+                                            $selectedTourTypes = old('tour_types', isset($tour) ? $tour->types->pluck('type')->toArray() : []);
+                                        @endphp
+                                        <option value="Adventure" {{ in_array('Adventure', $selectedTourTypes) ? 'selected' : '' }}>Adventure</option>
+                                        <option value="Culture" {{ in_array('Culture', $selectedTourTypes) ? 'selected' : '' }}>Culture</option>
+                                        <option value="Wellness" {{ in_array('Wellness', $selectedTourTypes) ? 'selected' : '' }}>Wellness</option>
+                                        <option value="Art & Lifestyle" {{ in_array('Art & Lifestyle', $selectedTourTypes) ? 'selected' : '' }}>Art & Lifestyle</option>
                                     </select>
                                     <input type="hidden" name="removed_tour_type_ids" id="removed_tour_type_ids">
                                 </div>
                             </div>
 
+
                             <!-- Tour Payment Terms Section -->
                             <div class="card mb-4">
-                                <div class="card-header">Tour Payment Terms</div>
+                                <div class="card-header">Tour Fare Prices</div>
                                 <div class="card-body">
-                                    <table class="table" id="payment-terms-section">
+                                    <table class="table" id="fare-terms-section">
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
@@ -269,36 +421,35 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if(isset($tour->paymentTerms) && $tour->paymentTerms->count() > 0)
-                                                @foreach($tour->paymentTerms as $paymentTerm)
+                                            @php
+                                                $fareIds = old('fare_ids', isset($tour->fares) ? $tour->fares->pluck('id')->toArray() : []);
+                                                $fareNames = old('fare_name', isset($tour->fares) ? $tour->fares->pluck('name')->toArray() : []);
+                                                $fareAmounts = old('fare_amount', isset($tour->fares) ? $tour->fares->pluck('price')->toArray() : []);
+                                            @endphp
+
+                                            @if(count($fareIds) > 0)
+                                                @foreach($fareIds as $index => $fareId)
                                                     <tr>
-                                                        <input type="hidden" name="payment_term_ids[]" value="{{ $paymentTerm->id }}">
-                                                        <td><input type="text" name="payment_name[]" value="{{ $paymentTerm->name }}" class="form-control"></td>
-                                                        <td><input type="number" name="payment_amount[]" value="{{ $paymentTerm->amount }}" class="form-control payment-amount"></td>
-                                                        <td><button type="button" class="btn btn-danger remove-payment-term-row">Remove</button></td>
+                                                        <input type="hidden" name="fare_ids[]" value="{{ $fareId }}">
+                                                        <td><input type="text" name="fare_name[]" value="{{ $fareNames[$index] ?? '' }}" class="form-control"></td>
+                                                        <td><input type="number" name="fare_amount[]" value="{{ $fareAmounts[$index] ?? '' }}" class="form-control fare-amount"></td>
+                                                        <td><button type="button" class="btn btn-danger remove-fare-term-row">Remove</button></td>
                                                     </tr>
                                                 @endforeach
                                             @else
                                                 <tr>
-                                                    <input type="hidden" name="payment_term_ids[]" value="">
-                                                    <td><input type="text" name="payment_name[]" class="form-control"></td>
-                                                    <td><input type="number" name="payment_amount[]" class="form-control payment-amount"></td>
-                                                    <td><button type="button" class="btn btn-danger remove-payment-term-row">Remove</button></td>
+                                                    <input type="hidden" name="fare_ids[]" value="">
+                                                    <td><input type="text" name="fare_name[]" class="form-control"></td>
+                                                    <td><input type="number" name="fare_amount[]" class="form-control fare-amount"></td>
+                                                    <td><button type="button" class="btn btn-danger remove-fare-term-row">Remove</button></td>
                                                 </tr>
                                             @endif
                                         </tbody>
-                                        <!-- Fixed Total Row -->
-                                        <tfoot>
-                                            <tr>
-                                                <td><input type="text" class="form-control" value="Total" readonly></td>
-                                                <td><input type="number" id="total_amount" name="total_amount" class="form-control" readonly></td>
-                                                <td></td>
-                                            </tr>
-                                        </tfoot>
                                     </table>
-                                    <button type="button" class="btn btn-success add-payment-term-row">Add Payment Term</button>
+                                    <button type="button" class="btn btn-success add-fare-term-row">Add New Fares</button>
                                 </div>
                             </div>
+
 
                             <!-- Submit Button -->
                             <button type="submit" class="btn btn-primary">Save Tour</button>
@@ -315,150 +466,390 @@
     <!-- Include Select2 JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
     <script>
         $(document).ready(function () {
-            // Initialize Select2 for tour types
-            $('#tour-types').select2({
-                tags: true,
-                tokenSeparators: [',', ' '],
-                placeholder: "Add or select tour types",
-            });
 
-            // Calculate and update the Total Amount
-            function updateTotalAmount() {
-                let total = 0;
-                $('.payment-amount').each(function () {
-                    const amount = parseFloat($(this).val());
-                    if (!isNaN(amount)) {
-                        total += amount;
-                    }
+
+            let cropper;
+            let currentInput = null; // Track the current input
+            let currentListItem = null; // Track the list item being cropped
+
+            // Handle file input change
+            $(document).on('change', '.image-input', function (event) {
+                const files = Array.from(event.target.files); // Convert files to an array
+                const inputElement = event.target; // Reference the file input
+
+                files.forEach((file, index) => {
+                    // Add each image to the preview list
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const previewList = $(inputElement).closest('.col-md-6').find('.existing-images ul');
+                        const listItem = $('<li>').addClass('existing-image-wrapper mb-2');
+                        const previewImage = $('<img>')
+                            .attr('src', e.target.result)
+                            .addClass('img-thumbnail mb-2')
+                            .css('width', '100px');
+                        const removeButton = $('<button>')
+                            .attr('type', 'button') // Prevent form submission
+                            .addClass('btn btn-danger btn-sm remove-image')
+                            .text('Remove')
+                            .data('file-index', index); // Store index for reference
+
+                        const cropButton = $('<button>')
+                            .attr('type', 'button') // Prevent form submission
+                            .addClass('btn btn-warning btn-sm crop-again')
+                            .text('Crop');
+
+                        listItem.append(previewImage).append(removeButton).append(cropButton);
+                        previewList.append(listItem);
+                    };
+                    reader.readAsDataURL(file);
                 });
-                $('#total_amount').val(total);
-            }
-
-            // Add new Itinerary row
-            $('.add-itinerary-row').click(function () {
-                const newItineraryCard = `
-                    <div class="card mb-3 itinerary-item">
-                        <div class="card-header">
-                            New Day - New Title
-                            <button type="button" class="btn btn-danger float-right remove-itinerary-row">Remove</button>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-2 mb-3">
-                                    <label>Day</label>
-                                    <input type="number" name="itinerary_day[]" class="form-control" required>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label>Title</label>
-                                    <input type="text" name="itinerary_title[]" class="form-control" required>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label>Meal</label>
-                                    <input type="text" name="itinerary_meal[]" class="form-control">
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label>Accommodation</label>
-                                    <input type="text" name="itinerary_accommodation[]" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Highlights</label>
-                                    <div class="highlights-container">
-                                        <div class="highlight-item mb-2">
-                                            <input type="text" name="itinerary_highlights[new][]" class="form-control mb-2">
-                                            <button type="button" class="btn btn-danger btn-sm remove-highlight">Remove Highlight</button>
-                                        </div>
-                                        <button type="button" class="btn btn-success btn-sm add-highlight mt-2" data-itinerary-id="new">Add Highlight</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Images</label>
-                                    <input type="file" name="itinerary_images[new][]" multiple class="form-control">
-                                    <div class="existing-images mt-3">
-                                        <label>Uploaded Images:</label>
-                                        <ul class="list-unstyled">
-                                            <!-- Images will be dynamically added here -->
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
-                $('#itinerary-section').append(newItineraryCard);
             });
 
-            // Remove Itinerary row
-            $(document).on('click', '.remove-itinerary-row', function () {
-                $(this).closest('.itinerary-item').remove();
+
+
+
+            // Open cropper modal for cropping (when clicking "Crop" beside "Remove")
+            $(document).on('click', '.crop-again', function () {
+                const imageSrc = $(this).siblings('img').attr('src'); // Get the image source
+                currentListItem = $(this).closest('li'); // Track the current list item
+                $('#cropImagePreview').attr('src', imageSrc); // Set modal preview image
+
+                // Destroy any existing Cropper.js instance
+                if (cropper) {
+                    cropper.destroy();
+                }
+
+                // Initialize Cropper.js
+                cropper = new Cropper(document.getElementById('cropImagePreview'), {
+                    aspectRatio: 16 / 9, // Adjust as needed
+                    viewMode: 1,
+                });
+
+                // Show the cropper modal
+                $('#customModal').fadeIn();
             });
 
-            // Add new Highlight row
-            $(document).on('click', '.add-highlight', function () {
-                const itineraryId = $(this).data('itinerary-id');
-                const highlightContainer = $(this).closest('.highlights-container');
-                const newHighlight = `
-                    <div class="highlight-item mb-2">
-                        <input type="text" name="itinerary_highlights[${itineraryId}][]" class="form-control mb-2">
-                        <button type="button" class="btn btn-danger btn-sm remove-highlight">Remove Highlight</button>
-                    </div>`;
-                highlightContainer.prepend(newHighlight);
+            // Handle cropping in the modal
+            $('#cropImage').on('click', function () {
+                if (cropper) {
+                    const croppedCanvas = cropper.getCroppedCanvas();
+                    croppedCanvas.toBlob(function (blob) {
+                        // Option 1: Replace original file
+                        const file = new File([blob], "cropped.jpg", { type: "image/jpeg" });
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        currentInput.files = dataTransfer.files;
+
+                        // Option 2: Add a hidden input for the cropped image
+                        const croppedImageSrc = croppedCanvas.toDataURL('image/jpeg');
+                        const hiddenInput = $('<input>')
+                            .attr('type', 'hidden')
+                            .attr('name', `cropped_images[${currentInput.dataset.itineraryId}][]`)
+                            .val(croppedImageSrc);
+                        $(currentInput).closest('.col-md-6').append(hiddenInput);
+
+                        $('#customModal').fadeOut();
+                        cropper.destroy();
+                        cropper = null;
+                    });
+                }
             });
 
-            // Remove Highlight row
-            $(document).on('click', '.remove-highlight', function () {
-                $(this).closest('.highlight-item').remove();
+
+            // Close the cropper modal
+            $(document).on('click', '.custom-close', function () {
+                $('#customModal').fadeOut();
+                if (cropper) {
+                    cropper.destroy();
+                    cropper = null; // Reset cropper
+                }
             });
 
-            // Remove Image functionality
             $(document).on('click', '.remove-image', function () {
-                const imageId = $(this).data('image-id');
-                // Add the ID to the removed image input field or handle with AJAX
+                const fileIndex = $(this).data('file-index');
+                const imageId = $(this).data('image-id'); // For existing images from the server
+                const fileInput = $(this).closest('.col-md-6').find('.image-input')[0];
+                const removedImageInput = $(this).closest('.col-md-6').find('.removed-image-ids'); // Hidden input to store removed image IDs
+
+                // Remove the image preview
                 $(this).closest('.existing-image-wrapper').remove();
+
+                // Handle newly uploaded files (client-side)
+                if (fileInput.files && typeof fileIndex !== 'undefined') {
+                    const dataTransfer = new DataTransfer();
+                    Array.from(fileInput.files).forEach((file, index) => {
+                        if (index !== fileIndex) {
+                            dataTransfer.items.add(file);
+                        }
+                    });
+                    fileInput.files = dataTransfer.files; // Update the file input
+                }
+
+                // Handle existing images (server-side)
+                if (imageId) {
+                    const currentValue = removedImageInput.val();
+                    removedImageInput.val(currentValue ? `${currentValue},${imageId}` : imageId); // Append the image ID
+                }
             });
 
-            // Trigger total amount calculation on payment amount change
-            $(document).on('input', '.payment-amount', function () {
-                updateTotalAmount();
+
+            // Remove an image
+            // $(document).on('click', '.remove-image', function () {
+            //     $(this).closest('.existing-image-wrapper').remove();
+            // });
+
+
+
+                // Initialize Select2 for tour types
+                $('#tour-types').select2({
+                    tags: false,
+                    tokenSeparators: [',', ' '],
+                    placeholder: "Select tour types",
+                });
+
+                // Calculate and update the Total Amount
+
+                let itineraryIndex = $('#itinerary-section .itinerary-item').length; // Initialize based on existing rows
+
+                // Add new Itinerary row
+                $('.add-itinerary-row').click(function () {
+                    const newItineraryCard = `
+                        <div class="card mb-3 itinerary-item" data-itinerary-index="${itineraryIndex}">
+                            <div class="card-header">
+                                Day <input type="number" name="itinerary_day[${itineraryIndex}]" value="" class="form-control d-inline-block w-auto">
+                                <button type="button" class="btn btn-danger float-right remove-itinerary-row">Remove</button>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>Title</label>
+                                        <input type="text" name="itinerary_title[${itineraryIndex}]" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label>Meal</label>
+                                        <input type="text" name="itinerary_meal[${itineraryIndex}]" class="form-control">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label>Accommodation</label>
+                                        <input type="text" name="itinerary_accommodation[${itineraryIndex}]" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Highlights</label>
+                                        <div class="highlights-container">
+                                            <div class="highlight-item mb-2">
+                                                <input type="text" name="itinerary_highlights[${itineraryIndex}][]" class="form-control mb-2">
+                                                <button type="button" class="btn btn-danger btn-sm remove-highlight">Remove Highlight</button>
+                                            </div>
+                                            <button type="button" class="btn btn-success btn-sm add-highlight mt-2" data-itinerary-id="${itineraryIndex}">Add Highlight</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Images</label>
+                                        <input type="file" name="itinerary_images[${itineraryIndex}][]" multiple class="form-control image-input">
+                                        <div class="existing-images mt-3">
+                                            <label>Uploaded Images:</label>
+                                            <ul class="list-unstyled">
+                                                <!-- Images will be dynamically added here -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    $('#itinerary-section').append(newItineraryCard);
+                    itineraryIndex++;
+                });
+
+               // Remove Itinerary row and re-index
+                $(document).on('click', '.remove-itinerary-row', function () {
+                    $(this).closest('.itinerary-item').remove();
+
+                    // Re-index all rows
+                    $('#itinerary-section .itinerary-item').each(function (index) {
+                        $(this).attr('data-itinerary-index', index);
+                        $(this).find('[name^="itinerary_day"]').attr('name', `itinerary_day[${index}]`);
+                        $(this).find('[name^="itinerary_title"]').attr('name', `itinerary_title[${index}]`);
+                        $(this).find('[name^="itinerary_meal"]').attr('name', `itinerary_meal[${index}]`);
+                        $(this).find('[name^="itinerary_accommodation"]').attr('name', `itinerary_accommodation[${index}]`);
+                        $(this).find('[name^="itinerary_highlights"]').attr('name', `itinerary_highlights[${index}][]`);
+                        $(this).find('[name^="itinerary_images"]').attr('name', `itinerary_images[${index}][]`);
+                    });
+
+                    itineraryIndex = $('#itinerary-section .itinerary-item').length; // Reset the index counter
+                });
+
+
+
+
+                $('.add-validity-row').click(function () {
+                    const newRow = `
+                        <tr>
+                            <input type="hidden" name="validity_ids[]" value="">
+                            <td>
+                                <textarea class="ckeditor-textarea form-control" name="validity[]"></textarea>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger remove-validity-row">Remove</button>
+                            </td>
+                        </tr>`;
+                    $('#validity-section tbody').append(newRow);
+
+                    // Initialize CKEditor for the new row
+                    CKEDITOR.replace($('#validity-section tbody').find('textarea').last()[0], {
+                        toolbar: [
+                            { name: 'basicstyles', items: ['Bold', 'Underline'] }
+                        ],
+                        removeButtons: 'Italic,Strike,Subscript,Superscript'
+                    });
+                });
+
+
+                $('.add-payment-term-row').click(function () {
+                    const newRow = `
+                        <tr>
+                            <input type="hidden" name="payment_term_ids[]" value="">
+                            <td>
+                                <textarea class="ckeditor-textarea form-control" name="payment_term[]"></textarea>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger remove-payment-term-row">Remove</button>
+                            </td>
+                        </tr>`;
+                    $('#payment-section tbody').append(newRow);
+
+                    // Initialize CKEditor for the new row
+                    CKEDITOR.replace($('#payment-section tbody').find('textarea').last()[0], {
+                        toolbar: [
+                            { name: 'basicstyles', items: ['Bold', 'Underline'] }
+                        ],
+                        removeButtons: 'Italic,Strike,Subscript,Superscript'
+                    });
+                });
+
+                $('.add-inclusion-row').click(function () {
+                    const newRow = `
+                        <tr>
+                            <input type="hidden" name="inclusion_ids[]" value="">
+                            <td>
+                                <textarea class="ckeditor-textarea form-control" name="inclusion[]"></textarea>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger remove-inclusion-row">Remove</button>
+                            </td>
+                        </tr>`;
+                    $('#inclusion-section tbody').append(newRow);
+
+                    // Initialize CKEditor for the new row
+                    CKEDITOR.replace($('#inclusion-section tbody').find('textarea').last()[0], {
+                        toolbar: [
+                            { name: 'basicstyles', items: ['Bold', 'Underline'] }
+                        ],
+                        removeButtons: 'Italic,Strike,Subscript,Superscript'
+                    });
+                });
+
+                $('.add-exclusion-row').click(function () {
+                    const newRow = `
+                        <tr>
+                            <input type="hidden" name="exclusion_ids[]" value="">
+                            <td>
+                                <textarea class="ckeditor-textarea form-control" name="exclusion[]"></textarea>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger remove-exclusion-row">Remove</button>
+                            </td>
+                        </tr>`;
+                    $('#exclusion-section tbody').append(newRow);
+
+                    // Initialize CKEditor for the new row
+                    CKEDITOR.replace($('#exclusion-section tbody').find('textarea').last()[0], {
+                        toolbar: [
+                            { name: 'basicstyles', items: ['Bold', 'Underline'] }
+                        ],
+                        removeButtons: 'Italic,Strike,Subscript,Superscript'
+                    });
+                });
+
+                    // Generic handler for removing rows
+                    $(document).on('click', '.remove-validity-row, .remove-payment-term-row, .remove-inclusion-row, .remove-exclusion-row', function () {
+                        $(this).closest('tr').remove();
+                    });
+
+
+
+                // Remove Itinerary row
+                $(document).on('click', '.remove-itinerary-row', function () {
+                    $(this).closest('.itinerary-item').remove();
+                });
+
+                $(document).on('click', '.add-highlight', function () {
+                    const itineraryId = $(this).data('itinerary-id');
+                    const highlightContainer = $(this).closest('.highlights-container'); // Target the correct container
+                    const newHighlight = `
+                        <div class="highlight-item mb-2">
+                            <input type="text" name="itinerary_highlights[${itineraryId}][]" class="form-control mb-2">
+                            <button type="button" class="btn btn-danger btn-sm remove-highlight">Remove Highlight</button>
+                        </div>`;
+
+                    highlightContainer.append(newHighlight); // Use append to add the new row at the bottom
+                });
+
+
+                // Remove Highlight row
+                $(document).on('click', '.remove-highlight', function () {
+                    $(this).closest('.highlight-item').remove();
+                });
+
+                // Remove Image functionality
+                $(document).on('click', '.remove-image', function () {
+                    const imageId = $(this).data('image-id');
+                    // Add the ID to the removed image input field or handle with AJAX
+                    $(this).closest('.existing-image-wrapper').remove();
+                });
+
+                // Trigger total amount calculation on payment amount change
+
+
+                // Add new Payment Term row
+                $('.add-fare-term-row').click(function () {
+                    const tableBody = $('#fare-terms-section tbody');
+                    const newRow = `
+                        <tr>
+                            <input type="hidden" name="fare_term_ids[]" value="">
+                            <td><input type="text" name="fare_name[]" class="form-control"></td>
+                            <td><input type="number" name="fare_amount[]" class="form-control fare-amount"></td>
+                            <td><button type="button" class="btn btn-danger remove-fare-term-row">Remove</button></td>
+                        </tr>`;
+                    tableBody.append(newRow);
+                });
+
+                // Remove Payment Term row and update total amount
+                $(document).on('click', '.remove-fare-term-row', function () {
+                    $(this).closest('tr').remove();
+
+                });
+
+                // Initial calculation of total amount if there are existing payment terms
             });
 
-            // Add new Payment Term row
-            $('.add-payment-term-row').click(function () {
-                const tableBody = $('#payment-terms-section tbody');
-                const newRow = `
-                    <tr>
-                        <input type="hidden" name="payment_term_ids[]" value="">
-                        <td><input type="text" name="payment_name[]" class="form-control"></td>
-                        <td><input type="number" name="payment_amount[]" class="form-control payment-amount"></td>
-                        <td><button type="button" class="btn btn-danger remove-payment-term-row">Remove</button></td>
-                    </tr>`;
-                tableBody.append(newRow);
-            });
-
-            // Remove Payment Term row and update total amount
-            $(document).on('click', '.remove-payment-term-row', function () {
-                $(this).closest('tr').remove();
-                updateTotalAmount();
-            });
-
-            // Initial calculation of total amount if there are existing payment terms
-            updateTotalAmount();
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialize CKEditor for all existing textareas
-            document.querySelectorAll('.ckeditor-textarea').forEach((textarea) => {
-                CKEDITOR.replace(textarea, {
-                    toolbar: [
-                        { name: 'basicstyles', items: ['Bold', 'Underline'] }
-                    ],
-                    removeButtons: 'Italic,Strike,Subscript,Superscript'
+            document.addEventListener('DOMContentLoaded', function () {
+                // Initialize CKEditor for all existing textareas
+                document.querySelectorAll('.ckeditor-textarea').forEach((textarea) => {
+                    CKEDITOR.replace(textarea, {
+                        toolbar: [
+                            { name: 'basicstyles', items: ['Bold', 'Underline'] }
+                        ],
+                        removeButtons: 'Italic,Strike,Subscript,Superscript'
+                    });
                 });
             });
-        });
     </script>
 @endsection
 

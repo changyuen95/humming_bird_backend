@@ -29,11 +29,14 @@ class Tour extends Model
         'status',
     ];
 
-    protected $with = [ 'itineraries', 'validity', 'paymentTerms', 'inclusions', 'exclusions', 'types'];
+    protected $with = [ 'fares', 'itineraries', 'validity', 'paymentTerms', 'inclusions', 'exclusions', 'types'];
     protected $appends = ['images','tags'];
 
 
-
+    public function fares()
+    {
+        return $this->hasMany(TourFare::class);
+    }
 
     public function itineraries()
     {
