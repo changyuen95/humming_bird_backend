@@ -719,7 +719,10 @@
                         toolbar: [
                             { name: 'basicstyles', items: ['Bold', 'Underline'] }
                         ],
-                        removeButtons: 'Italic,Strike,Subscript,Superscript'
+                        removeButtons: 'Italic,Strike,Subscript,Superscript',
+                        allowedContent: 'b u br', // Allow <b>, <u>, and <br>
+                        enterMode: CKEDITOR.ENTER_BR, // Use <br> when pressing Enter
+                        shiftEnterMode: CKEDITOR.ENTER_BR // Use <br> when pressing Shift+Enter
                     });
                 });
 
@@ -742,8 +745,12 @@
                         toolbar: [
                             { name: 'basicstyles', items: ['Bold', 'Underline'] }
                         ],
-                        removeButtons: 'Italic,Strike,Subscript,Superscript'
+                        removeButtons: 'Italic,Strike,Subscript,Superscript',
+                        allowedContent: 'b u br', // Allow <b>, <u>, and <br>
+                        enterMode: CKEDITOR.ENTER_BR, // Use <br> when pressing Enter
+                        shiftEnterMode: CKEDITOR.ENTER_BR // Use <br> when pressing Shift+Enter
                     });
+
                 });
 
                 $('.add-inclusion-row').click(function () {
@@ -786,7 +793,10 @@
                         toolbar: [
                             { name: 'basicstyles', items: ['Bold', 'Underline'] }
                         ],
-                        removeButtons: 'Italic,Strike,Subscript,Superscript'
+                        removeButtons: 'Italic,Strike,Subscript,Superscript',
+                        allowedContent: 'b u br', // Allow <b>, <u>, and <br>
+                        enterMode: CKEDITOR.ENTER_BR, // Use <br> when pressing Enter
+                        shiftEnterMode: CKEDITOR.ENTER_BR // Use <br> when pressing Shift+Enter
                     });
                 });
 
@@ -859,7 +869,10 @@
                         toolbar: [
                             { name: 'basicstyles', items: ['Bold', 'Underline'] }
                         ],
-                        removeButtons: 'Italic,Strike,Subscript,Superscript'
+                        removeButtons: 'Italic,Strike,Subscript,Superscript',
+                        allowedContent: 'b u br', // Allow <b>, <u>, and <br>
+                        enterMode: CKEDITOR.ENTER_BR, // Use <br> when pressing Enter
+                        shiftEnterMode: CKEDITOR.ENTER_BR // Use <br> when pressing Shift+Enter
                     });
                 });
             });

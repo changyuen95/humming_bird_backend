@@ -80,6 +80,9 @@
         .voyager .breadcrumb a{
             color:{{ config('voyager.primary_color','#22A7F0') }};
         }
+        .voyager .breadcrumb {
+            display:none;
+        }
         .custom-modal {
             display: none; /* Hidden by default */
             position: fixed;
