@@ -20,7 +20,7 @@ class TourController extends Controller
 {
     public function index()
     {
-        $tours = Tour::orderBy('updated_at', 'desc')->paginate(10);
+        $tours = Tour::orderBy('updated_at', 'desc')->paginate(20);
         return view('tour', compact('tours'));
     }
 
