@@ -156,9 +156,9 @@ class TourController extends Controller
             if ($request->hasFile('main_image')) {
                 try {
                     // Delete old main image if it exists
-                    if ($tour->attributes['image']) {
-                        Storage::disk('public')->delete(str_replace($tour->attributes['image'], '/storage/', ''));
-                    }
+                    // if ($tour->attributes['image']) {
+                    //     Storage::disk('public')->delete(str_replace($tour->attributes['image'], '/storage/', ''));
+                    // }
 
                     // Save the new image
                     $path = $request->file('main_image')->store('main_images', 'public');
