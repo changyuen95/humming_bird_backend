@@ -201,7 +201,7 @@ class TourController extends Controller
             foreach ($paymentTerms as $index => $paymentTerm) {
                 TourPaymentTerm::updateOrCreate(
                     ['id' => $paymentTermIds[$index] ?? null],
-                    ['tour_id' => $tourId, 'name' => $paymentTerm]
+                    ['tour_id' => $tourId, 'payment_term' => $paymentTerm]
                 );
             }
 

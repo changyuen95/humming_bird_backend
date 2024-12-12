@@ -121,7 +121,7 @@
                                                     <tr>
                                                         <input type="hidden" name="payment_term_ids[]" value="{{ old("payment_term_ids.$index", $terms->id ?? '') }}">
                                                         <td>
-                                                            <textarea class="ckeditor-textarea form-control" name="payment_term[]">{{ old("payment_term.$index", $terms->name ?? '') }}</textarea>
+                                                            <textarea class="ckeditor-textarea form-control" name="payment_term[]">{{ old("payment_term.$index", $terms->payment_term ?? '') }}</textarea>
                                                         </td>
                                                         <td><button type="button" class="btn btn-danger remove-payment-term-row">Remove</button></td>
                                                     </tr>
