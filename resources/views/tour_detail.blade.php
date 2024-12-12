@@ -115,7 +115,7 @@
                                                 <label>Uploaded Image:</label>
                                                 @if(!empty($tour->image))
                                                     <img src="{{ asset($tour->image) }}" alt="Main Image" id="mainImagePreview" class="img-fluid">
-                                                    <button type="button" id="cropMainImage" class="btn btn-warning mt-2">Crop</button>
+                                                    {{-- <button type="button" class="btn btn-danger remove-existing-image mt-2">Remove</button> --}}
                                                 @else
                                                     <span>No image uploaded. Please upload a main image.</span>
                                                 @endif
@@ -540,21 +540,30 @@
             let mainImageCropper;
             let mainImageFile;
 
+            $(document).on('click', '.remove-existing-image', function () {
+                $('#existingMainImageSection').hide();
+                $('#newMainImageSection').show();
+                $('#removeExistingMainImage').val(1); // Mark the existing image for removal
+            });
+
+
             // Handle Main Image Upload
             $('#main-image-input').on('change', function (e) {
                 const file = e.target.files[0];
-
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = function (event) {
-                        const previewContainer = $('#main-image-preview');
-                        previewContainer.html(`
-                            <img id="mainImagePreview" src="${event.target.result}" class="img-thumbnail mb-3" style="max-width: 200px;">
-                        `);
-                        $('#crop-main-image').removeClass('d-none'); // Show crop button
+                    reader.onload = function (e) {
+                        $('#newImagePreview').attr('src', e.target.result);
+                        $('#newImagePreviewWrapper').show();
+
+                        // Initialize Cropper.js
+                        if (cropper) cropper.destroy();
+                        cropper = new Cropper(document.getElementById('newImagePreview'), {
+                            aspectRatio: 16 / 9,
+                            viewMode: 1,
+                        });
                     };
                     reader.readAsDataURL(file);
-                    mainImageFile = file;
                 }
             });
 
