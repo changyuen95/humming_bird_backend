@@ -103,6 +103,41 @@
                                 </div>
                             </div>
 
+                            <!-- Tour Main Image Section -->
+                                <div class="card mb-4">
+                                    <div class="card-header">Tour Main Image</div>
+                                    <div class="card-body">
+                                        <p><span class="text-muted">Note:</span> This image will be used as the banner for the tour. If left empty, the first itinerary image will be used.</p>
+                                        <div class="form-group">
+                                            <label for="main-image">Upload Main Image:</label>
+                                            <input type="file" id="main-image-input" name="main_image" class="form-control" accept="image/*">
+                                            <div class="mt-3">
+                                                <label>Uploaded Image:</label>
+                                                <div id="main-image-preview" class="mb-3">
+                                                    <!-- Cropped or Uploaded Image Will Be Displayed Here -->
+                                                </div>
+                                                <button type="button" class="btn btn-warning btn-sm d-none" id="crop-main-image">Crop</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Main Image Crop Modal -->
+                                <div id="mainImageCropModal" class="custom-modal" style="display: none;">
+                                    <div class="custom-modal-content">
+                                        <span id="closeMainImageModal" class="custom-close">&times;</span>
+                                        <h5>Crop Main Image</h5>
+                                        <div class="img-container">
+                                            <img id="mainImageCropPreview" src="" style="max-width: 100%;">
+                                        </div>
+                                        <button type="button" id="cropMainImageButton" class="btn btn-primary">Crop</button>
+                                        <button type="button" id="closeMainImageModal" class="btn btn-secondary">Cancel</button>
+                                    </div>
+                                </div>
+
+
+
+
                                 {{-- @dd($tour->paymentTerms) --}}
                             <!-- Payment terms Section -->
                             <div class="card mb-4">
@@ -396,7 +431,22 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- Cropper Modal -->
+                                        <div id="customModal" class="custom-modal">
+                                            <div class="custom-modal-content">
+                                                <span class="custom-close">&times;</span>
+                                                <h5>Crop Image</h5>
+                                                <div class="img-container">
+                                                    <img id="cropImagePreview" src="" style="max-width: 100%;">
+                                                </div>
+                                                <button type="button" id="cropImage" class="btn btn-primary">Crop</button>
+                                                <button type="button" class="btn btn-secondary custom-close">Cancel</button>
+                                            </div>
+                                        </div>
                                         @endif
+
+
+
                                     </div>
                                     <button type="button" class="btn btn-success add-itinerary-row">Add Itinerary</button>
                                 </div>
@@ -485,6 +535,74 @@
     <script>
         $(document).ready(function () {
 
+            let mainImageCropper;
+            let mainImageFile;
+
+            // Handle Main Image Upload
+            $('#main-image-input').on('change', function (e) {
+                const file = e.target.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        const previewContainer = $('#main-image-preview');
+                        previewContainer.html(`
+                            <img id="mainImagePreview" src="${event.target.result}" class="img-thumbnail mb-3" style="max-width: 200px;">
+                        `);
+                        $('#crop-main-image').removeClass('d-none'); // Show crop button
+                    };
+                    reader.readAsDataURL(file);
+                    mainImageFile = file;
+                }
+            });
+
+            // Open Crop Modal for Main Image
+            $('#crop-main-image').on('click', function () {
+                const imageSrc = $('#mainImagePreview').attr('src');
+                $('#mainImageCropPreview').attr('src', imageSrc);
+
+                // Initialize Cropper.js
+                if (mainImageCropper) {
+                    mainImageCropper.destroy();
+                }
+                mainImageCropper = new Cropper(document.getElementById('mainImageCropPreview'), {
+                    aspectRatio: 16 / 9, // Adjust as needed
+                    viewMode: 1,
+                });
+
+                $('#mainImageCropModal').fadeIn();
+            });
+
+            // Handle Crop for Main Image
+            $('#cropMainImageButton').on('click', function () {
+                if (mainImageCropper) {
+                    const croppedCanvas = mainImageCropper.getCroppedCanvas();
+                    croppedCanvas.toBlob(function (blob) {
+                        const croppedFile = new File([blob], "cropped-main-image.jpg", { type: "image/jpeg" });
+                        mainImageFile = croppedFile;
+
+                        const croppedImageSrc = URL.createObjectURL(blob);
+                        $('#main-image-preview').html(`
+                            <img src="${croppedImageSrc}" class="img-thumbnail mb-3" style="max-width: 200px;">
+                        `);
+
+                        $('#mainImageCropModal').fadeOut();
+                        mainImageCropper.destroy();
+                        mainImageCropper = null;
+                    });
+                }
+            });
+
+            // Close Crop Modal (Specific to Main Image)
+            $('#closeMainImageModal').on('click', function () {
+                $('#mainImageCropModal').fadeOut();
+                if (mainImageCropper) {
+                    mainImageCropper.destroy();
+                    mainImageCropper = null;
+                }
+            });
+
+            //itinerary images
 
             let cropper;
             let currentInput = null; // Track the current input
@@ -492,6 +610,8 @@
 
             // Handle file input change
             $(document).on('change', '.image-input', function (event) {
+                currentInput = event.target; // Assign the current input when a file is selected
+
                 const files = Array.from(event.target.files); // Convert files to an array
                 const inputElement = event.target; // Reference the file input
 
@@ -528,24 +648,51 @@
 
             // Open cropper modal for cropping (when clicking "Crop" beside "Remove")
             $(document).on('click', '.crop-again', function () {
-                const imageSrc = $(this).siblings('img').attr('src'); // Get the image source
-                currentListItem = $(this).closest('li'); // Track the current list item
-                $('#cropImagePreview').attr('src', imageSrc); // Set modal preview image
+                const imageSrc = $(this).siblings('img').attr('src');
+                if (!imageSrc) {
+                    console.error('Image source is missing or undefined.');
+                    return;
+                }
 
-                // Destroy any existing Cropper.js instance
+                currentListItem = $(this).closest('li'); // Track the current list item
+                $('#cropImagePreview').attr('src', imageSrc);
+
+                const cropImagePreview = document.getElementById('cropImagePreview');
+                if (!cropImagePreview) {
+                    console.error('#cropImagePreview element is missing.');
+                    console.log('DOM structure:', document.body.innerHTML); // Log DOM for debugging
+                    return;
+                }
+
                 if (cropper) {
                     cropper.destroy();
                 }
 
-                // Initialize Cropper.js
-                cropper = new Cropper(document.getElementById('cropImagePreview'), {
+                cropper = new Cropper(cropImagePreview, {
+                    aspectRatio: 16 / 9,
+                    viewMode: 1,
+                });
+
+                $('#customModal').fadeIn();
+            });
+
+
+
+            $('#cropImagePreview').on('load', function () {
+                // Ensure the image is loaded before initializing the cropper
+                const cropImageElement = document.getElementById('cropImagePreview');
+                if (cropImageElement && cropper) {
+                    cropper.destroy();
+                }
+
+                cropper = new Cropper(cropImageElement, {
                     aspectRatio: 16 / 9, // Adjust as needed
                     viewMode: 1,
                 });
 
-                // Show the cropper modal
-                $('#customModal').fadeIn();
+                $('#customModal').fadeIn(); // Show the modal
             });
+
 
             // Handle cropping in the modal
             $('#cropImage').on('click', function () {
@@ -677,8 +824,84 @@
                             </div>
                         </div>`;
                     $('#itinerary-section').append(newItineraryCard);
+
+                    // Rebind crop functionality to the newly added row
+                    rebindCropFunctionality();
                     itineraryIndex++;
                 });
+
+                function rebindCropFunctionality() {
+                $(document).off('click', '.crop-again').on('click', '.crop-again', function () {
+                    const imageSrc = $(this).siblings('img').attr('src');
+                    currentListItem = $(this).closest('li');
+                    $('#cropImagePreview').attr('src', imageSrc);
+
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+
+                    cropper = new Cropper(document.getElementById('cropImagePreview'), {
+                        aspectRatio: 16 / 9,
+                        viewMode: 1,
+                    });
+
+                    $('#customModal').fadeIn();
+                });
+
+                $('#cropImage').off('click').on('click', function () {
+                    if (cropper) {
+                        const croppedCanvas = cropper.getCroppedCanvas();
+                        croppedCanvas.toBlob(function (blob) {
+                            const file = new File([blob], "cropped.jpg", { type: "image/jpeg" });
+
+                            // Update the file input with the cropped image
+                            const dataTransfer = new DataTransfer();
+                            dataTransfer.items.add(file);
+
+                            if (currentInput) {
+                                currentInput.files = dataTransfer.files;
+
+                                // Update the image preview
+                                const croppedImageSrc = URL.createObjectURL(blob);
+                                $(currentInput)
+                                    .closest('.col-md-6') // Find the related section
+                                    .find('.existing-images ul') // Update the image preview
+                                    .html(`
+                                        <li class="existing-image-wrapper mb-2">
+                                            <img src="${croppedImageSrc}" class="img-thumbnail mb-2" style="width: 100px;">
+                                            <button type="button" class="btn btn-danger btn-sm remove-image">Remove</button>
+                                            <button type="button" class="btn btn-warning btn-sm crop-again">Crop</button>
+                                        </li>
+                                    `);
+                            }
+
+                            // Close the modal and destroy the cropper
+                            $('#customModal').fadeOut();
+                            cropper.destroy();
+                            cropper = null;
+                        }, 'image/jpeg');
+                    }
+                });
+
+            }
+
+            // Ensure crop modal is always available
+            if (!document.getElementById('customModal')) {
+                const modalHtml = `
+                    <div id="customModal" class="custom-modal">
+                        <div class="custom-modal-content">
+                            <span class="custom-close">&times;</span>
+                            <h5>Crop Image</h5>
+                            <div class="img-container">
+                                <img id="cropImagePreview" src="" style="max-width: 100%;">
+                            </div>
+                            <button type="button" id="cropImage" class="btn btn-primary">Crop</button>
+                            <button type="button" class="btn btn-secondary custom-close">Cancel</button>
+                        </div>
+                    </div>`;
+                $('body').append(modalHtml);
+            }
+
 
                // Remove Itinerary row and re-index
                 $(document).on('click', '.remove-itinerary-row', function () {

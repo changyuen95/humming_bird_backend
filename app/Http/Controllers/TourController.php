@@ -74,7 +74,35 @@ class TourController extends Controller
             $tour->description = $validatedData['introduction']; // Map 'introduction' to 'description'
 
             // Save the tour record to the database
+
+            if ($request->hasFile('main_image')) {
+                try {
+                    $path = $request->file('main_image')->store('main_images', 'public');
+                    $tour->update(['image' => $path]); // Update the tour with the image path
+                } catch (\Exception $e) {
+                    Log::error("Failed to save main image for new tour: {$e->getMessage()}");
+                    throw $e;
+                }
+            }
+
+            if ($request->hasFile('main_image')) {
+                try {
+                    // Delete old main image if it exists
+                    if ($tour->image) {
+                        Storage::disk('public')->delete($tour->image);
+                    }
+
+                    // Save the new image
+                    $path = $request->file('main_image')->store('main_images', 'public');
+                    $tour->update(['image' => $path]);
+                } catch (\Exception $e) {
+                    Log::error("Failed to save main image for tour {$tour->id}: {$e->getMessage()}");
+                    throw $e;
+                }
+            }
+
             $tour->save();
+
             try {
                 $this->storeOrUpdateRelations($request, $tour->id);
                 DB::commit();
@@ -140,6 +168,23 @@ class TourController extends Controller
             $tour->nights = $validatedData['nights'];
             $tour->description = $validatedData['introduction']; // Map 'introduction' to 'description'
             $tour->save();
+
+            if ($request->hasFile('main_image')) {
+                try {
+                    // Delete old main image if it exists
+                    if ($tour->image) {
+                        Storage::disk('public')->delete($tour->image);
+                    }
+
+                    // Save the new image
+                    $path = $request->file('main_image')->store('main_images', 'public');
+                    $tour->update(['image' => $path]);
+                } catch (\Exception $e) {
+                    Log::error("Failed to save main image for tour {$tour->id}: {$e->getMessage()}");
+                    throw $e;
+                }
+            }
+
         try {
 
             $this->storeOrUpdateRelations($request, $tour->id);
@@ -159,6 +204,9 @@ class TourController extends Controller
     {
 
         try {
+
+
+
             // Validity
             $validityIds = $request->input('validity_ids', []);
             $validities = $request->input('validity', []);
@@ -315,7 +363,7 @@ class TourController extends Controller
                             $path = $file->store('itinerary_images', 'public');
                             TourItineraryImage::create([
                                 'tour_itinerary_id' => $itinerary->id,
-                                'image' => 'storage/'.$path,
+                                'image' => '/'.'storage/'.$path,
                             ]);
                         }
                     }
