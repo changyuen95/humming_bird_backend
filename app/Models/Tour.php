@@ -73,7 +73,6 @@ class Tour extends Model
         $tags = [];
         $types = $this->types->pluck('type')->toArray();
 
-        $tags[] = $this->destination;
         $tags[] = $this->region;
         $tags[] = $this->season;
         $tags = array_merge($tags, $types);
