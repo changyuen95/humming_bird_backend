@@ -80,11 +80,11 @@ class Tour extends Model
         return $tags;
     }
 
-    public function getImageAttribute()
+    public function getImageAttribute($value)
     {
 
-        if($this->image){
-            return $this->image;
+        if($value){
+            return $value;
         }
 
         $image = $this->images->first();
