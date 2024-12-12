@@ -20,6 +20,7 @@ class CreateToursTable extends Migration
             $table->string('destination');
             $table->string('image');
             $table->string('season');
+            $table->string('region');
             $table->date('from_date');
             $table->date('to_date');
             $table->integer('days');

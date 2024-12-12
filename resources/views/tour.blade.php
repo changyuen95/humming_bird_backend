@@ -33,7 +33,7 @@
                             <td>{{ $tour->to_date }}</td>
                             <td>{{ $tour->price }}</td>
                             <td>{{ $tour->status }}</td>
-                            <td>{{ $tour->updated_at? $tour_updated_at->format('Y-m-d H:i:s') : null }}</td>
+                            <td>{{ $tour->updated_at? $tour->updated_at->format('Y-m-d H:i:s') : null }}</td>
                             <td>
                                 <a href="{{ route('tour.edit', $tour->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                 <form action="{{ route('tour.destroy', $tour->id) }}" method="POST" style="display:inline-block;">

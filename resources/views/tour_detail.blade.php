@@ -286,14 +286,27 @@
                                                             <label>Highlights</label>
                                                             <div class="highlights-container">
                                                                 @php
-                                                                    $highlights = old("itinerary_highlights.$index") ?? ($itinerary['highlights'] ?? []);
-                                                                @endphp
-                                                                @foreach($highlights as $highlightIndex => $highlight)
-                                                                    <div class="highlight-item mb-2">
-                                                                        <input type="text" name="itinerary_highlights[{{ $index }}][]" value="{{ $highlight['highlight'] }}" class="form-control mb-2">
-                                                                        <button type="button" class="btn btn-danger btn-sm remove-highlight">Remove Highlight</button>
-                                                                    </div>
-                                                                @endforeach
+                                                                    $highlights = [];
+                                                                    if (old("itinerary_highlights.$index")) {
+                                                                        // Use old values directly if they exist
+                                                                        $highlights = (array) old("itinerary_highlights.$index");
+                                                                    } else {
+                                                                        // Use highlights from the database and extract the 'highlight' key
+                                                                        $highlights = array_map(fn($highlight) => $highlight['highlight'] ?? '', $itinerary['highlights'] ?? []);
+                                                                    }
+                                                                    @endphp
+
+                                                                    @foreach($highlights as $highlightIndex => $highlight)
+                                                                        <div class="highlight-item mb-2">
+                                                                            <input
+                                                                                type="text"
+                                                                                name="itinerary_highlights[{{ $index }}][]"
+                                                                                value="{{ $highlight }}"
+                                                                                class="form-control mb-2">
+                                                                            <button type="button" class="btn btn-danger btn-sm remove-highlight">Remove Highlight</button>
+                                                                        </div>
+                                                                    @endforeach
+
                                                                 <button type="button" class="btn btn-success btn-sm add-highlight mt-2" data-itinerary-id="{{ $index }}">Add Highlight</button>
                                                             </div>
                                                         </div>
@@ -305,7 +318,7 @@
                                                                 <ul class="list-unstyled">
                                                                     @foreach($itinerary['images'] ?? [] as $image)
                                                                         <li class="existing-image-wrapper mb-2">
-                                                                            <img src="{{ asset('storage/' . $image['image']) }}" class="img-thumbnail mb-2" style="width: 100px;">
+                                                                            <img src="{{ asset($image['image']) }}" class="img-thumbnail mb-2" style="width: 100px;">
                                                                             <input type="hidden" name="existing_itinerary_images[{{ $index }}][]" value="{{ $image['id'] }}">
                                                                             <button type="button" class="btn btn-danger btn-sm remove-image" data-image-id="{{ $image['id'] }}">Remove</button>
                                                                         </li>
