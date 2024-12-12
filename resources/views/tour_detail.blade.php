@@ -114,7 +114,7 @@
                                             <div class="mt-3">
                                                 <label>Uploaded Image:</label>
                                                 @if(!empty($tour->image))
-                                                    <img src="{{ asset('storage/' . $tour->image) }}" alt="Main Image" id="mainImagePreview" class="img-fluid">
+                                                    <img src="{{ asset($tour->image) }}" alt="Main Image" id="mainImagePreview" class="img-fluid">
                                                     <button type="button" id="cropMainImage" class="btn btn-warning mt-2">Crop</button>
                                                 @else
                                                     <span>No image uploaded. Please upload a main image.</span>
