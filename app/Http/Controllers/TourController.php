@@ -309,7 +309,7 @@ class TourController extends Controller
                             $path = $file->store('itinerary_images', 'public');
                             TourItineraryImage::create([
                                 'tour_itinerary_id' => $itinerary->id,
-                                'image' => $path,
+                                'image' => 'storage/'.$path,
                             ]);
                         }
                     }
