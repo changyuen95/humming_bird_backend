@@ -83,6 +83,10 @@ class Tour extends Model
     public function getImageAttribute()
     {
 
+        if($this->image){
+            return $this->image;
+        }
+
         $image = $this->images->first();
         if ($image) {
             return $image->image;
