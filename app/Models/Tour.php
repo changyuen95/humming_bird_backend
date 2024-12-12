@@ -76,7 +76,7 @@ class Tour extends Model
         $tags[] = $this->destination;
         $tags[] = $this->region;
         $tags[] = $this->season;
-        $tags = array_merge($types);
+        $tags = array_merge($tags, $types);
         return $tags;
     }
 
