@@ -78,25 +78,9 @@ class TourController extends Controller
             if ($request->hasFile('main_image')) {
                 try {
                     $path = $request->file('main_image')->store('main_images', 'public');
-                    $tour->update(['image' => $path]); // Update the tour with the image path
+                    $tour->image = '/'.'storage/'.$path; // Update the tour with the image path
                 } catch (\Exception $e) {
                     Log::error("Failed to save main image for new tour: {$e->getMessage()}");
-                    throw $e;
-                }
-            }
-
-            if ($request->hasFile('main_image')) {
-                try {
-                    // Delete old main image if it exists
-                    if ($tour->image) {
-                        Storage::disk('public')->delete($tour->image);
-                    }
-
-                    // Save the new image
-                    $path = $request->file('main_image')->store('main_images', 'public');
-                    $tour->update(['image' => $path]);
-                } catch (\Exception $e) {
-                    Log::error("Failed to save main image for tour {$tour->id}: {$e->getMessage()}");
                     throw $e;
                 }
             }
@@ -178,7 +162,7 @@ class TourController extends Controller
 
                     // Save the new image
                     $path = $request->file('main_image')->store('main_images', 'public');
-                    $tour->update(['image' => $path]);
+                    $tour->update(['image' => '/'.'storage/'.$path]);
                 } catch (\Exception $e) {
                     Log::error("Failed to save main image for tour {$tour->id}: {$e->getMessage()}");
                     throw $e;
