@@ -55,6 +55,7 @@ class TourController extends Controller
                 'string' => 'The :attribute must be a valid string.',
             ]);
 
+            DB::beginTransaction();
 
             // Map the validated data to the Tour model
             $tour = new Tour();
@@ -76,10 +77,15 @@ class TourController extends Controller
             $tour->save();
             try {
                 $this->storeOrUpdateRelations($request, $tour->id);
+                DB::commit();
+
                 return redirect()->route('tour.edit', ['id' => $tour->id])->with('success', 'Tour updated successfully.');
             } catch (\Exception $e) {
                 // Handle the error gracefully and redirect back with an error message
+                DB::rollBack();
+
                 return back()->withInput()->with('error', 'An error occurred: ' . $e->getMessage());
+
             }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage())->withInput();;
