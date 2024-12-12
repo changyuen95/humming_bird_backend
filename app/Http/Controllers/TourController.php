@@ -223,19 +223,31 @@ class TourController extends Controller
                 );
             }
 
-            // Tour Types
-            $tourTypes = $request->input('tour_types', []);
+            // Fetch the currently existing tour types in the database
+            $existingTourTypes = TourType::where('tour_id', $tourId)->pluck('type', 'id')->toArray();
+
+            // Handle removed types
             $removedTourTypeIds = $request->input('removed_tour_type_ids', []);
             if (!empty($removedTourTypeIds)) {
                 TourType::where('tour_id', $tourId)
                     ->whereIn('id', $removedTourTypeIds)
                     ->delete();
             }
+
+            // Handle added/updated types
+            $tourTypes = $request->input('tour_types', []);
             foreach ($tourTypes as $type) {
-                TourType::firstOrCreate(
-                    ['tour_id' => $tourId, 'type' => $type]
-                );
+                // Only create the type if it doesn't already exist
+                if (!in_array($type, $existingTourTypes)) {
+                    TourType::firstOrCreate(['tour_id' => $tourId, 'type' => $type]);
+                }
             }
+
+            // Optionally, handle removing types that are no longer in the submitted list
+            TourType::where('tour_id', $tourId)
+                ->whereNotIn('type', $tourTypes)
+                ->delete();
+
 
             // Itineraries
             $itineraryIds = $request->input('itinerary_ids', []);
