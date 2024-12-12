@@ -17,7 +17,11 @@ use App\Http\Controllers\TourController;
 
 
 Route::get('/', function () {
-    return redirect('/admin/login');
+    return redirect('/tour');
+});
+
+Route::get('/admin', function () {
+    return redirect('/tour');
 });
 
 
