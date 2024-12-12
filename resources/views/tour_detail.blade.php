@@ -113,10 +113,12 @@
                                             <input type="file" id="main-image-input" name="main_image" class="form-control" accept="image/*">
                                             <div class="mt-3">
                                                 <label>Uploaded Image:</label>
-                                                <div id="main-image-preview" class="mb-3">
-                                                    <!-- Cropped or Uploaded Image Will Be Displayed Here -->
-                                                </div>
-                                                <button type="button" class="btn btn-warning btn-sm d-none" id="crop-main-image">Crop</button>
+                                                @if(!empty($tour->image))
+                                                    <img src="{{ asset('storage/' . $tour->image) }}" alt="Main Image" id="mainImagePreview" class="img-fluid">
+                                                    <button type="button" id="cropMainImage" class="btn btn-warning mt-2">Crop</button>
+                                                @else
+                                                    <span>No image uploaded. Please upload a main image.</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -572,6 +574,20 @@
 
                 $('#mainImageCropModal').fadeIn();
             });
+
+            $('#cropMainImage').on('click', function () {
+                const imageElement = document.getElementById('mainImagePreview');
+                if (imageElement) {
+                    // Initialize cropper for the main image
+                    cropper = new Cropper(imageElement, {
+                        aspectRatio: 16 / 9, // Adjust as needed
+                        viewMode: 1,
+                    });
+
+                    $('#customModal').fadeIn(); // Show modal for cropping
+                }
+            });
+
 
             // Handle Crop for Main Image
             $('#cropMainImageButton').on('click', function () {
