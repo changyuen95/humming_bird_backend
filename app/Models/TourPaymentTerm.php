@@ -11,7 +11,7 @@ class TourPaymentTerm extends Model
 
     protected $fillable = [
         'tour_id',
-        'name',
+        'payment_term',
         'amount'
     ];
 
