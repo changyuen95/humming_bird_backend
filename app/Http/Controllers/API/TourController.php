@@ -63,7 +63,7 @@ class TourController extends Controller
                 return in_array($tourStartMonth, $months) || in_array($tourEndMonth, $months);
             });
         } else {
-            $tours = $tours->get();
+            $tours = $tours->orderBy('from_date')->get();
         }
 
         return response()->json([
