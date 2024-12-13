@@ -35,6 +35,7 @@ class TourController extends Controller
     {
 
         try {
+
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
                 'destination' => 'required|string',
@@ -49,16 +50,23 @@ class TourController extends Controller
                 'nights' => 'required|numeric',
                 'introduction' => 'required|string',
                 'status' => 'required|in:active,inactive',
-
+                'validity.*'     => 'required|string', // Validate each item in the array
+                'payment_terms.*'=> 'required|string',
+                'exclusions.*'   => 'required|string',
+                'inclusions.*'   => 'required|string',
             ], [
                 'required' => 'The :attribute field is required.',
                 'numeric' => 'The :attribute must be a valid number.',
                 'date' => 'The :attribute must be a valid date.',
                 'string' => 'The :attribute must be a valid string.',
+                'validity.*.required' => 'Each validity entry is required.',
+                'payment_terms.*.required' => 'Each payment term entry is required.',
+                'exclusions.*.required' => 'Each whats excluded entry is required.',
+                'inclusions.*.required' => 'Each whats included entry is required.',
+
             ]);
 
             DB::beginTransaction();
-
             // Map the validated data to the Tour model
             $tour = new Tour();
             $tour->name = $validatedData['name'];
@@ -102,6 +110,7 @@ class TourController extends Controller
 
             }
         } catch (\Exception $e) {
+
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage())->withInput();;
         }
     }
@@ -131,7 +140,14 @@ class TourController extends Controller
             'nights' => 'required|numeric',
             'introduction' => 'required|string',
             'status' => 'required|in:active,inactive',
-
+            'validity'       => 'required|array',
+            'validity.*'     => 'required|string', // Validate each item in the array
+            'payment_terms'  => 'required|array',
+            'payment_terms.*'=> 'required|string',
+            'exclusions'     => 'required|array',
+            'exclusions.*'   => 'required|string',
+            'inclusions'     => 'required|array',
+            'inclusions.*'   => 'required|string',
         ], [
             'required' => 'The :attribute field is required.',
             'numeric' => 'The :attribute must be a valid number.',

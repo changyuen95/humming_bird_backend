@@ -229,7 +229,7 @@
 
 
                             <div class="card mb-4">
-                                <div class="card-header">Tour Inclusions</div>
+                                <div class="card-header">What's Included</div>
                                 <div class="card-body">
                                     <table class="table" id="inclusion-section">
                                         <thead>
@@ -264,7 +264,7 @@
 
 
                             <div class="card mb-4">
-                                <div class="card-header">Tour Exclusions</div>
+                                <div class="card-header">What's Excluded</div>
                                 <div class="card-body">
                                     <table class="table" id="exclusion-section">
                                         <thead>
@@ -1138,6 +1138,30 @@
                     });
                 });
             });
+
+            document.querySelector('form').addEventListener('submit', function (e) {
+                // Array of CKEditor instance IDs to validate
+                const requiredEditors = [
+                    'validity',       // For Tour Validity
+                    'payment_terms',  // For Payment Terms
+                    'exclusions',     // For Exclusions
+                    'inclusions'      // For Inclusions
+                ];
+
+                let isValid = true; // Flag to track if the form is valid
+                requiredEditors.forEach((editorId) => {
+                    const editorContent = CKEDITOR.instances[editorId]?.getData().trim(); // Get CKEditor content
+                    if (!editorContent) {
+                        isValid = false;
+                        alert(`The ${editorId.replace('_', ' ')} field is required.`); // Replace underscores with spaces for better readability
+                    }
+                });
+
+                if (!isValid) {
+                    e.preventDefault(); // Prevent form submission
+                }
+            });
+
     </script>
 @endsection
 
