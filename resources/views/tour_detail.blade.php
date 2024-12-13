@@ -61,8 +61,17 @@
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="region">Region:</label>
-                                        <input type="text" class="form-control" id="region" name="region" value="{{ old('region', isset($tour) ? $tour->region : '') }}" required>
+                                        <select class="form-control" id="region" name="region" required>
+                                            <option value="South America" {{ old('region', isset($tour) ? $tour->region : '') === 'South America' ? 'selected' : '' }}>South America</option>
+                                            <option value="Central America" {{ old('region', isset($tour) ? $tour->region : '') === 'Central America' ? 'selected' : '' }}>Central America</option>
+                                            <option value="Scandinavia" {{ old('region', isset($tour) ? $tour->region : '') === 'Scandinavia' ? 'selected' : '' }}>Scandinavia</option>
+                                            <option value="Central Asia" {{ old('region', isset($tour) ? $tour->region : '') === 'Central Asia' ? 'selected' : '' }}>Central Asia</option>
+                                            <option value="East Asia" {{ old('region', isset($tour) ? $tour->region : '') === 'East Asia' ? 'selected' : '' }}>East Asia</option>
+                                            <option value="South Asia" {{ old('region', isset($tour) ? $tour->region : '') === 'South Asia' ? 'selected' : '' }}>South Asia</option>
+                                            <option value="South-East Asia" {{ old('region', isset($tour) ? $tour->region : '') === 'South-East Asia' ? 'selected' : '' }}>South-East Asia</option>
+                                        </select>
                                     </div>
+
                                     <div class="form-group col-lg-6">
                                         <label for="season">Season:</label>
                                         <input type="text" class="form-control" id="season" name="season" value="{{ old('season', isset($tour) ? $tour->season : '') }}" required>
@@ -95,6 +104,14 @@
                                         <label for="to_date">End Date:</label>
                                         <input type="date" class="form-control" id="to_date" name="to_date" value="{{ old('to_date', isset($tour) ? $tour->to_date : '') }}" required>
                                     </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="status">Status:</label>
+                                        <select class="form-control" id="status" name="status" required>
+                                            <option value="active" {{ old('status', isset($tour) ? $tour->status : '') === 'active' ? 'selected' : '' }}>Active</option>
+                                            <option value="inactive" {{ old('status', isset($tour) ? $tour->status : '') === 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                        </select>
+                                    </div>
+
 
 
                                 </div>
@@ -111,7 +128,7 @@
                                             <div class="mt-3">
                                                 <label>Uploaded Image:</label>
                                                 @if(!empty($tour->image))
-                                                    <img src="{{ asset($tour->image) }}" alt="Main Image" id="mainImagePreview" class="img-fluid">
+                                                    <img style="max-width: 50%" src="{{ asset($tour->image) }}" alt="Main Image" id="mainImagePreview" class="img-fluid">
                                                     {{-- <button type="button" class="btn btn-danger remove-existing-image mt-2">Remove</button> --}}
                                                 @else
                                                     <span>No image uploaded. Please upload a main image.</span>

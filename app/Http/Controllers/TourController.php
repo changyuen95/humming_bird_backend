@@ -48,6 +48,8 @@ class TourController extends Controller
                 'days' => 'required|numeric',
                 'nights' => 'required|numeric',
                 'introduction' => 'required|string',
+                'status' => 'required|in:active,inactive',
+
             ], [
                 'required' => 'The :attribute field is required.',
                 'numeric' => 'The :attribute must be a valid number.',
@@ -72,7 +74,7 @@ class TourController extends Controller
             $tour->days = $validatedData['days'];
             $tour->nights = $validatedData['nights'];
             $tour->description = $validatedData['introduction']; // Map 'introduction' to 'description'
-
+            $tour->status = $validatedData['status'];
             // Save the tour record to the database
 
             if ($request->hasFile('main_image')) {
@@ -128,6 +130,8 @@ class TourController extends Controller
             'days' => 'required|numeric',
             'nights' => 'required|numeric',
             'introduction' => 'required|string',
+            'status' => 'required|in:active,inactive',
+
         ], [
             'required' => 'The :attribute field is required.',
             'numeric' => 'The :attribute must be a valid number.',
@@ -151,6 +155,7 @@ class TourController extends Controller
             $tour->days = $validatedData['days'];
             $tour->nights = $validatedData['nights'];
             $tour->description = $validatedData['introduction']; // Map 'introduction' to 'description'
+            $tour->status = $validatedData['status'];
             $tour->save();
 
             if ($request->hasFile('main_image')) {
