@@ -216,7 +216,7 @@
                                             @endforeach
                                             @if(empty($validities))
                                                 <tr>
-                                                    <input type="hidden" name="validity_ids[]" value="">
+                                                    <input required type="hidden" name="validity_ids[]" value="">
                                                     <td><textarea class="ckeditor-textarea form-control" name="validity[]"></textarea></td>
                                                     <td><button type="button" class="btn btn-danger remove-validity-row">Remove</button></td>
                                                 </tr>
@@ -251,7 +251,7 @@
                                             @endforeach
                                             @if(empty($inclusions))
                                                 <tr>
-                                                    <input type="hidden" name="inclusion_ids[]" value="">
+                                                    <input required type="hidden" name="inclusion_ids[]" value="">
                                                     <td><textarea class="ckeditor-textarea form-control" name="inclusion[]"></textarea></td>
                                                     <td><button type="button" class="btn btn-danger remove-inclusion-row">Remove</button></td>
                                                 </tr>
@@ -286,7 +286,7 @@
                                             @endforeach
                                             @if(empty($exclusions))
                                                 <tr>
-                                                    <input type="hidden" name="exclusion_ids[]" value="">
+                                                    <input required type="hidden" name="exclusion_ids[]" value="">
                                                     <td><textarea class="ckeditor-textarea form-control" name="exclusion[]"></textarea></td>
                                                     <td><button type="button" class="btn btn-danger remove-exclusion-row">Remove</button></td>
                                                 </tr>
