@@ -137,13 +137,9 @@ class TourController extends Controller
             'nights' => 'required|numeric',
             'introduction' => 'required|string',
             'status' => 'required|in:active,inactive',
-            'validity'       => 'required|array',
             'validity.*'     => 'required|string', // Validate each item in the array
-            'payment_terms'  => 'required|array',
             'payment_terms.*'=> 'required|string',
-            'exclusions'     => 'required|array',
             'exclusions.*'   => 'required|string',
-            'inclusions'     => 'required|array',
             'inclusions.*'   => 'required|string',
         ], [
             'required' => 'The :attribute field is required.',

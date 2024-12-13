@@ -1140,27 +1140,22 @@
             });
 
             document.querySelector('form').addEventListener('submit', function (e) {
-                // Array of CKEditor instance IDs to validate
-                const requiredEditors = [
-                    'validity',       // For Tour Validity
-                    'payment_terms',  // For Payment Terms
-                    'exclusions',     // For Exclusions
-                    'inclusions'      // For Inclusions
-                ];
+                let isValid = true;
+                const sections = ['validity', 'payment_terms', 'exclusions', 'inclusions'];
 
-                let isValid = true; // Flag to track if the form is valid
-                requiredEditors.forEach((editorId) => {
-                    const editorContent = CKEDITOR.instances[editorId]?.getData().trim(); // Get CKEditor content
-                    if (!editorContent) {
-                        isValid = false;
-                        alert(`The ${editorId.replace('_', ' ')} field is required.`); // Replace underscores with spaces for better readability
-                    }
+                sections.forEach(section => {
+                    document.querySelectorAll(`textarea[name="${section}[]"]`).forEach((textarea, index) => {
+                        const editorInstance = CKEDITOR.instances[textarea.id];
+                        if (!editorInstance || !editorInstance.getData().trim()) {
+                            isValid = false;
+                            alert(`${section.replace('_', ' ').toUpperCase()} entry at row #${index + 1} is required.`);
+                            editorInstance?.focus();
+                            e.preventDefault();
+                        }
+                    });
                 });
-
-                if (!isValid) {
-                    e.preventDefault(); // Prevent form submission
-                }
             });
+
 
     </script>
 @endsection
