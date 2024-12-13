@@ -30,6 +30,21 @@
 
     <!-- Few Dynamic Styles -->
     <style type="text/css">
+            body, html {
+                color: black;
+                font-family: system-ui;
+                font-size: 16px;
+            }
+
+            .table{
+                color: black;
+            }
+            .form-control {
+                background-color: #fff;
+                background-image: none;
+                border: 1px solid #e4eaec;
+                color: black;
+            }
             /* Error Box Styling */
             .error-box {
                 color: #a94442;
