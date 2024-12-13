@@ -38,4 +38,20 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $exception)
+    {
+        // Check if the user is unauthenticated
+        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            return redirect()->route('voyager.login'); // Adjust route if your login route is different
+        }
+
+        // For session expired errors, redirect to login
+        if ($exception instanceof \ErrorException && str_contains($exception->getMessage(), 'Attempt to read property')) {
+            return redirect()->route('voyager.login'); // Replace with your login route
+        }
+
+        return parent::render($request, $exception);
+    }
+
 }
