@@ -59,10 +59,7 @@ class TourController extends Controller
                 'numeric' => 'The :attribute must be a valid number.',
                 'date' => 'The :attribute must be a valid date.',
                 'string' => 'The :attribute must be a valid string.',
-                'validity.*.required' => 'Each validity entry is required.',
-                'payment_terms.*.required' => 'Each payment term entry is required.',
-                'exclusions.*.required' => 'Each whats excluded entry is required.',
-                'inclusions.*.required' => 'Each whats included entry is required.',
+
 
             ]);
 

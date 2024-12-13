@@ -142,10 +142,43 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        // Validity Messages
+        'validity.0' => [
+            'required' => 'The first validity entry is required.',
+        ],
+        'validity.*' => [
+            'required' => 'Each validity entry is required.',
+            'string'   => 'Each validity entry must be a string.',
+        ],
+
+        // Payment Terms Messages
+        'payment_terms.0' => [
+            'required' => 'The first payment term is required.',
+        ],
+        'payment_terms.*' => [
+            'required' => 'Each payment term is required.',
+            'string'   => 'Each payment term must be a string.',
+        ],
+
+        // Exclusions Messages
+        'exclusions.0' => [
+            'required' => 'The first exclusion entry is required.',
+        ],
+        'exclusions.*' => [
+            'required' => 'Each exclusion entry is required.',
+            'string'   => 'Each exclusion entry must be a string.',
+        ],
+
+        // Inclusions Messages
+        'inclusions.0' => [
+            'required' => 'The first inclusion entry is required.',
+        ],
+        'inclusions.*' => [
+            'required' => 'Each inclusion entry is required.',
+            'string'   => 'Each inclusion entry must be a string.',
         ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
