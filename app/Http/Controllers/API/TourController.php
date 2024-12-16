@@ -169,7 +169,7 @@ class TourController extends Controller
     // Filter by types
     if ($filter_params['types'] && !in_array('All', $filter_params['types'])) {
         $query->whereHas('types', function ($q) use ($filter_params) {
-            $q->whereIn('name', $filter_params['types']); // Use types relationship
+            $q->whereIn('type', $filter_params['types']); // Use types relationship
         });
     }
 
