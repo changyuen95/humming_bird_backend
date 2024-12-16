@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
     Route::get('/tours', [TourController::class, 'getTours']); // Get a list of tours
     Route::get('/tours/{name}', [TourController::class, 'getTourDetails']); // Get tour details by ID
-    Route::post('/tours-filter', [TourController::class, 'getToursFilter']); // Get a list of tours
+    Route::get('/get-tours', [TourController::class, 'getToursAjax']); // Get a list of tours
 
 
 

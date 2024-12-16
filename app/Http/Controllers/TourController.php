@@ -397,4 +397,66 @@ class TourController extends Controller
 
         return redirect()->route('tour.index')->with('success', 'Tour deleted successfully.');
     }
+
+    public function getToursAjax(Request $request)
+    {
+        // Extract filters from the request
+        $filter_params['date'] = $request->get('date');
+        $filter_params['destinations'] = $request->get('destinations');
+        $filter_params['types'] = $request->get('types');
+        $filter_params['season'] = $request->get('season');
+
+        // Start the query builder for the Tour model
+        $query = Tour::query();
+
+        // Filter by types
+        if ($filter_params['types'] && !in_array('All', $filter_params['types'])) {
+            $query->whereHas('tags', function ($q) use ($filter_params) {
+                $q->whereIn('name', $filter_params['types']);
+            });
+        }
+
+        // Filter by season
+        if ($filter_params['season'] && !in_array('All', $filter_params['season'])) {
+            $query->whereHas('tags', function ($q) use ($filter_params) {
+                $q->whereIn('name', $filter_params['season']);
+            });
+        }
+
+        // Filter by destinations
+        if ($filter_params['destinations'] && !in_array('All', $filter_params['destinations'])) {
+            $query->whereHas('tags', function ($q) use ($filter_params) {
+                $q->whereIn('name', $filter_params['destinations']);
+            });
+        }
+
+        // Filter by date range
+        if ($filter_params['date'] && !in_array('All', $filter_params['date'])) {
+            $query->where(function ($q) use ($filter_params) {
+                foreach ($filter_params['date'] as $month) {
+                    $months[] = $month;
+                    $months[] = $month + 1;
+                    $months[] = $month + 2;
+                }
+
+                $q->where(function ($query) use ($months) {
+                    foreach ($months as $month) {
+                        $query->orWhereMonth('from_date', $month)
+                            ->orWhereMonth('to_date', $month);
+                    }
+                });
+            });
+        }
+
+        // Execute the query and get the filtered results
+        $tours = $query->get();
+
+        // Return the result as JSON
+        return response()->json([
+            'status' => true,
+            'tours' => $tours,
+        ], 200);
+    }
+
+
 }
